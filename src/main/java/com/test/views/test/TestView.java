@@ -1,22 +1,17 @@
 package com.test.views.test;
 
 import com.test.views.MainLayout;
-import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.VaadinRequest;
 import com.vaadin.flow.server.VaadinSession;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.vaadin.firitin.components.DynamicFileDownloader;
 
-import java.io.File;
 import java.io.IOException;
 
 @PageTitle("Test")
@@ -33,10 +28,11 @@ public class TestView extends VerticalLayout
             }
         };
 
+        UI ui = UI.getCurrent();
         downloadButton.setDisableOnClick(true);
         downloadButton.addDownloadFinishedListener(e -> {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Download finished successfully");
-            setEnabled(true);
+            ui.access(() -> setEnabled(true));
         });
 
         downloadButton.addDownloadFailedListener(e -> {
