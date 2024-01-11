@@ -29,10 +29,15 @@ public class TestView extends VerticalLayout
         };
 
         UI ui = UI.getCurrent();
+        ui.setPollInterval(1000); // or @Push to AppShellConfigurator
         downloadButton.setDisableOnClick(true);
         downloadButton.addDownloadFinishedListener(e -> {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Download finished successfully");
-            ui.access(() -> setEnabled(true));
+            e.getSource().setEnabled(true);
+            // or
+            downloadButton.setEnabled(true);
+            // This is not needed, plain setEnabled references the class where this lambda is defined, TestView
+            // setEnabled(true)
         });
 
         downloadButton.addDownloadFailedListener(e -> {
